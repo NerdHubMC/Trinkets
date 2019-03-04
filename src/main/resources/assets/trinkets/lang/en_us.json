@@ -1,0 +1,16 @@
+{
+    "item.trinkets.demo_ring": "Demo Ring",
+    "tooltip.trinkets": "Trinkets (%s)",
+    "tooltip.trinkets.any": "Any",
+    "tooltip.trinkets.head": "Head",
+    "tooltip.trinkets.earring": "Earring",
+    "tooltip.trinkets.face": "Face",
+    "tooltip.trinkets.glove": "Glove",
+    "tooltip.trinkets.ring": "Ring",
+    "tooltip.trinkets.wristband": "Wristband",
+    "tooltip.trinkets.armband": "Armband",
+    "tooltip.trinkets.backpack": "Backpack",
+    "tooltip.trinkets.backpackslot": "Backpack Slot",
+    "tooltip.trinkets.belt": "Belt",
+    "tooltip.trinkets.beltslot": "Belt Slot"
+}

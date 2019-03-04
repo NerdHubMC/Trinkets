@@ -1,0 +1,10 @@
+{
+    "replace": false,
+    "values": [
+        "#trinkets:ring",
+        "#trinkets:glove",
+        "#trinkets:belt",
+        "#trinkets:backpack",
+        "trinkets:demo_ring"
+    ]
+}

@@ -1,0 +1,20 @@
+{
+    "id": "trinkets",
+    "name": "Trinkets",
+    "description": "Better than clothes",
+    "version": "1.0.0",
+    "side": "universal",
+    "initializers": [
+        "nerdhub.trinkets.Trinkets",
+        "nerdhub.trinkets.container.ContainerHandler",
+        "nerdhub.trinkets.client.GuiHandler"
+    ],
+    "requires": {
+        "fabric": "*",
+        "textilelib": "*"
+    },
+    "mixins": {
+        "client": "trinkets.client.json",
+        "common": "trinkets.common.json"
+    }
+}
