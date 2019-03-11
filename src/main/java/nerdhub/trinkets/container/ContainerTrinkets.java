@@ -45,14 +45,33 @@ public class ContainerTrinkets extends Container {
         this.player = player;
         this.trinketsInventory = (ITrinketsHolder) player;
 
-        this.addTrinketSlots(this.trinketsInventory.getTrinketsInventory(), 77, 8);
-        //this.addArmorSlots(this.player.inventory, 8, 8);
         this.addPlayerSlots(this.player.inventory, 8, 84);
+        this.addArmorSlots(this.player.inventory, 8, 8);
+        this.addTrinketSlots(this.trinketsInventory.getTrinketsInventory(), 77, 8);
     }
 
     @Override
     public boolean canUse(PlayerEntity var1) {
         return true;
+    }
+
+    @Override
+    public ItemStack transferSlot(PlayerEntity player, int slotID) {
+        if (slotID < 0 || slotID > 36)
+            return ItemStack.EMPTY;
+        Slot slot = this.slotList.get(slotID);
+        if (slot == null || slot.getStack().isEmpty())
+            return ItemStack.EMPTY;
+        ItemStack stack = slot.getStack();
+        ITrinketsHolder holder = (ITrinketsHolder) player;
+        Inventory inv = holder.getTrinketsInventory();
+        for (int i = 0; i < inv.getInvSize(); i++) {
+            if (!inv.getInvStack(i).isEmpty() || !inv.isValidInvStack(i, stack))
+                continue;
+            inv.setInvStack(i, slot.takeStack(1));
+            break;
+        }
+        return ItemStack.EMPTY;
     }
 
     private void addArmorSlots(PlayerInventory inv, int offsetX, int offsetY) {

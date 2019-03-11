@@ -3,7 +3,9 @@
     "package": "nerdhub.trinkets.mixin",
     "compatibilityLevel": "JAVA_8",
     "mixins": [
-        "MixinPlayerEntity"
+        "MixinPlayerEntity",
+        "MixinPlayerInventoryScreen",
+        "MixinContainerScreen"
     ],
     "injectors": {
         "defaultRequire": 1

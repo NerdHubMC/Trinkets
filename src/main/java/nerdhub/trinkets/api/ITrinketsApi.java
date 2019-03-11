@@ -2,6 +2,7 @@ package nerdhub.trinkets.api;
 
 import java.util.List;
 
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.TextComponent;
@@ -97,11 +98,11 @@ public interface ITrinketsApi {
     boolean isTrinketType(Item item, ITrinketType type);
 
     /**
-     * Creates a new Trinket Space for the Trinkets Inventory. A space is basically a slot in the GUI
+     * Creates a new Trinket Space for the Trinkets Inventory. A space is basically a slot in the Screen
      *
-     * @param type The type of Trinket that can be stored here, can be null for any type of Trinket
-     * @param x Position along the X axis, by default is restricted to between 0 and 4
-     * @param y Position along the Y axis, by default is restricted to between 0 and 3
+     * @param type     The type of Trinket that can be stored here, can be null for any type of Trinket
+     * @param x        Position along the X axis, by default is restricted to between 0 and 4
+     * @param y        Position along the Y axis, by default is restricted to between 0 and 3
      * @param slotIcon The slot icon that will be drawn when no Trinket is placed in the slot
      * @return The new Trinket Space
      */
@@ -153,4 +154,20 @@ public interface ITrinketsApi {
      * @return Text Component
      */
     TextComponent getTooltipComponent(List<ITrinketType> types);
+
+    /**
+     * Call to open the Trinkets Screen
+     * <p>
+     * CLIENT ONLY
+     */
+    void openTrinketsScreen();
+
+    /**
+     * Call to open the Trinkets Screen.
+     * <p>
+     * SERVER ONLY
+     *
+     * @param player Player
+     */
+    void openTrinketsScreen(PlayerEntity player);
 }

@@ -9,13 +9,17 @@ import net.minecraft.server.command.ServerCommandManager;
 import net.minecraft.text.StringTextComponent;
 import net.minecraft.text.TextComponent;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.PacketByteBuf;
 import net.minecraft.util.registry.Registry;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
+import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
+import net.fabricmc.fabric.api.network.PacketContext;
+import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
 import net.fabricmc.fabric.api.registry.CommandRegistry;
 
-import nerdhub.textilelib.event.client.TooltipCreationCallback;
+import nerdhub.textilelib.event.client.render.tooltip.TooltipCreationCallback;
 import nerdhub.textilelib.event.entity.player.PlayerTickCallback;
 import nerdhub.trinkets.api.ITrinket;
 import nerdhub.trinkets.api.ITrinketSpace;
@@ -84,5 +88,21 @@ public class Trinkets implements ModInitializer {
                 ((ITrinket) stack.getItem()).onTick(stack, playerEntity, spaces.get(i).getTrinketType());
             }
         });
+
+        ServerSidePacketRegistry.INSTANCE.register(new Identifier(Trinkets.MOD_ID, "open_screen"), this::openScreen);
+    }
+
+    private void openScreen(PacketContext context, PacketByteBuf packet) {
+        switch (packet.readByte()) {
+            case 0:
+                TrinketsApi.instance().openTrinketsScreen(context.getPlayer());
+                break;
+            case 1:
+                System.out.println("Open Belt");
+                break;
+            case 2:
+                System.out.println("Open Backpack");
+                break;
+        }
     }
 }

@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import net.minecraft.client.resource.language.I18n;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tag.ItemTags;
@@ -13,21 +14,28 @@ import net.minecraft.text.TextComponent;
 import net.minecraft.text.TextFormat;
 import net.minecraft.text.TranslatableTextComponent;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.PacketByteBuf;
 
+import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
+import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.fabricmc.fabric.api.tag.TagRegistry;
 
+import io.netty.buffer.Unpooled;
 import nerdhub.trinkets.Trinkets;
 import nerdhub.trinkets.api.ITrinketSpace;
 import nerdhub.trinkets.api.ITrinketType;
 import nerdhub.trinkets.api.ITrinketsApi;
+import nerdhub.trinkets.container.ContainerHandler;
 
 /**
  * @author BrockWS
  */
 public class Api implements ITrinketsApi {
 
+    private static final Identifier OPEN_SCREEN = new Identifier(Trinkets.MOD_ID, "open_screen");
     private static final Tag<Item> TRINKETS_TAG = TagRegistry.item(new Identifier(Trinkets.MOD_ID, "trinket"));
     private static ITrinketsApi INSTANCE;
+
     private Map<Identifier, ITrinketType> trinketTypes;
     private Map<Identifier, Tag<Item>> trinketTypeTags;
     private List<ITrinketSpace> trinketSpaces;
@@ -176,6 +184,16 @@ public class Api implements ITrinketsApi {
         TextComponent t = new TranslatableTextComponent("tooltip." + Trinkets.MOD_ID, s.toString());
         t.getStyle().setColor(TextFormat.GOLD);
         return t;
+    }
+
+    @Override
+    public void openTrinketsScreen() {
+        ClientSidePacketRegistry.INSTANCE.sendToServer(OPEN_SCREEN, new PacketByteBuf(Unpooled.buffer().writeByte(0)));
+    }
+
+    @Override
+    public void openTrinketsScreen(PlayerEntity player) {
+        ContainerProviderRegistry.INSTANCE.openContainer(ContainerHandler.TRINKETS_CONTAINER, player, buf -> buf.writeByte(0));
     }
 
     public static ITrinketsApi instance() {

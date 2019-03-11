@@ -83,6 +83,8 @@ public final class TrinketsInventory implements Inventory {
 
     @Override
     public boolean isValidInvStack(int slot, ItemStack stack) {
+        if (slot < 0 || slot >= TrinketsApi.instance().getTrinketSpaces().size())
+            return false;
         return this.canEquip(slot, stack);
     }
 
@@ -99,8 +101,12 @@ public final class TrinketsInventory implements Inventory {
     }
 
     private boolean canEquip(int slot, ItemStack stack) {
-        if (stack.isEmpty() || !(stack.getItem() instanceof ITrinket))
+        if (stack.isEmpty() || !TrinketsApi.instance().isTrinket(stack))
             return false;
+        if (!TrinketsApi.instance().isTrinketType(stack, TrinketsApi.instance().getTrinketSpaces().get(slot).getTrinketType()))
+            return false;
+        if (!(stack.getItem() instanceof ITrinket))
+            return true;
         return ((ITrinket) stack.getItem()).canEquip(stack, this.player, TrinketsApi.instance().getTrinketSpaces().get(slot).getTrinketType());
     }
 }

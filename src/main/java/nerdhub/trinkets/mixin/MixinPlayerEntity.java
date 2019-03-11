@@ -29,7 +29,7 @@ public abstract class MixinPlayerEntity implements ITrinketsHolder {
 
     @Inject(method = "<init>", at = @At("RETURN"))
     private void init(CallbackInfo ci) {
-        trinketsInv = new TrinketsInventory(16);
+        trinketsInv = new TrinketsInventory((PlayerEntity) (Object)this, 16);
     }
 
     @Inject(method = "dropInventory", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerInventory;dropAll()V"))
@@ -47,7 +47,6 @@ public abstract class MixinPlayerEntity implements ITrinketsHolder {
 
     @Inject(method = "readCustomDataFromTag", at = @At(value = "TAIL"))
     private void readCustomDataFromTag(CompoundTag tag, CallbackInfo ci) {
-        System.out.println("readCustomDataFromTag");
         if (tag.containsKey("trinkets", 9)) {
             ListTag list = tag.getList("trinkets", 10);
 
@@ -59,7 +58,6 @@ public abstract class MixinPlayerEntity implements ITrinketsHolder {
 
     @Inject(method = "writeCustomDataToTag", at = @At(value = "TAIL"))
     private void writeCustomDataToTag(CompoundTag tag, CallbackInfo ci) {
-        System.out.println("writeCustomDataToTag");
         ListTag list = new ListTag();
 
         for (int i = 0; i < trinketsInv.getInvSize(); i++) {
