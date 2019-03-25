@@ -2,7 +2,7 @@
     "id": "trinkets",
     "name": "Trinkets",
     "description": "Better than clothes",
-    "version": "1.0.0",
+    "version": "dev",
     "side": "universal",
     "initializers": [
         "nerdhub.trinkets.Trinkets",

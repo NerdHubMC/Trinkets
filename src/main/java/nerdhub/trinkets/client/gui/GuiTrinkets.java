@@ -4,6 +4,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.ContainerScreen;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.ingame.PlayerInventoryScreen;
+import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -38,9 +39,9 @@ public class GuiTrinkets extends ContainerScreen<ContainerTrinkets> implements I
     }
 
     @Override
-    public void draw(int mouseX, int mouseY, float ticks) {
+    public void render(int mouseX, int mouseY, float ticks) {
         this.drawBackground();
-        super.draw(mouseX, mouseY, ticks);
+        super.render(mouseX, mouseY, ticks);
         this.drawMouseoverTooltip(mouseX, mouseY);
     }
 
@@ -73,11 +74,19 @@ public class GuiTrinkets extends ContainerScreen<ContainerTrinkets> implements I
     }
 
     @Override
-    public void onSelectedChange(int selected) {
-        if (selected == 0) {
-            // Tell the server we closed the container
-            MinecraftClient.getInstance().getNetworkHandler().sendPacket(new GuiCloseC2SPacket(this.container.syncId));
-            MinecraftClient.getInstance().openScreen(new PlayerInventoryScreen(this.playerInventory.player));
+    public void onPress(ButtonWidget b) {
+        if (!(b instanceof TabWidget))
+            return;
+        TabWidget tab = (TabWidget) b;
+
+        switch (tab.getIndex()) {
+            case 0:
+                // Tell the server we closed the container
+                MinecraftClient.getInstance().getNetworkHandler().sendPacket(new GuiCloseC2SPacket(this.container.syncId));
+                MinecraftClient.getInstance().openScreen(new PlayerInventoryScreen(this.playerInventory.player));
+                break;
+            case 1:
+            default:
         }
     }
 }

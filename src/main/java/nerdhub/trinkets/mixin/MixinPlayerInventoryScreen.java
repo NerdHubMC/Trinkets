@@ -1,12 +1,15 @@
 package nerdhub.trinkets.mixin;
 
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.ingame.AbstractPlayerInventoryScreen;
 import net.minecraft.client.gui.ingame.PlayerInventoryScreen;
 import net.minecraft.client.gui.recipebook.RecipeBookGui;
+import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.container.PlayerContainer;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.server.network.packet.GuiCloseC2SPacket;
 import net.minecraft.text.TextComponent;
 
 import nerdhub.trinkets.api.TrinketsApi;
@@ -60,10 +63,19 @@ public abstract class MixinPlayerInventoryScreen extends AbstractPlayerInventory
     }
 
     @Override
-    public void onSelectedChange(int selected) {
-        if (selected == 1) {
-            TrinketsApi.instance().openTrinketsScreen();
+    public void onPress(ButtonWidget b) {
+        if (!(b instanceof TabWidget))
+            return;
+        TabWidget tab = (TabWidget) b;
+
+        switch (tab.getIndex()) {
+            case 0:
+                // This GUI
+                break;
+            case 1:
+                TrinketsApi.instance().openTrinketsScreen();
+                break;
+            default:
         }
     }
-
 }

@@ -14,7 +14,6 @@ import net.minecraft.util.registry.Registry;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
-import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.fabricmc.fabric.api.network.PacketContext;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
 import net.fabricmc.fabric.api.registry.CommandRegistry;
@@ -28,6 +27,7 @@ import nerdhub.trinkets.api.TrinketsApi;
 import nerdhub.trinkets.container.ContainerHandler;
 import nerdhub.trinkets.internal.ITrinketsHolder;
 import nerdhub.trinkets.item.ItemRing;
+import nerdhub.trinkets.util.Log;
 
 /**
  * @author BrockWS
@@ -39,7 +39,7 @@ public class Trinkets implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        System.out.println("Initializing Trinkets!");
+        Log.info("Initializing Trinkets!");
         ITrinketType ring = TrinketsApi.instance().createTrinketType(new Identifier(Trinkets.MOD_ID, "ring"));
         ITrinketType bandana = TrinketsApi.instance().createTrinketType(new Identifier(Trinkets.MOD_ID, "bandana"));
         ITrinketType backpack = TrinketsApi.instance().createTrinketType(new Identifier(Trinkets.MOD_ID, "backpack"));

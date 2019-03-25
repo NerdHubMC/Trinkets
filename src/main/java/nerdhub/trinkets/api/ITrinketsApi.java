@@ -98,7 +98,8 @@ public interface ITrinketsApi {
     boolean isTrinketType(Item item, ITrinketType type);
 
     /**
-     * Creates a new Trinket Space for the Trinkets Inventory. A space is basically a slot in the Screen
+     * Creates a new Trinket Space for the Trinkets Inventory. A space is basically a slot in the Screen.
+     * Contact us if you are adding extra slots and we may consider adding it natively in the mod.
      *
      * @param type     The type of Trinket that can be stored here, can be null for any type of Trinket
      * @param x        Position along the X axis, by default is restricted to between 0 and 4

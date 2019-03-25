@@ -1,10 +1,10 @@
 package nerdhub.trinkets.internal;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DefaultedList;
-import net.minecraft.util.InventoryUtil;
 
 import nerdhub.trinkets.api.ITrinket;
 import nerdhub.trinkets.api.TrinketsApi;
@@ -43,7 +43,7 @@ public final class TrinketsInventory implements Inventory {
     public ItemStack takeInvStack(int slot, int amount) {
         if (!this.canUnequip(slot))
             return ItemStack.EMPTY;
-        ItemStack stack = InventoryUtil.splitStack(this.stacks, slot, amount);
+        ItemStack stack = Inventories.splitStack(this.stacks, slot, amount);
         if (!stack.isEmpty())
             this.markDirty();
         return stack;

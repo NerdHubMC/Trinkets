@@ -5,7 +5,6 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.render.GuiLighting;
 import net.minecraft.client.render.item.ItemRenderer;
-import net.minecraft.client.resource.language.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
@@ -25,20 +24,18 @@ public class TabWidget extends ButtonWidget {
     private TextRenderer textRenderer;
 
     public TabWidget(ITabScreen screen, int x, int y, String name, int index, ItemStack icon) {
-        super(x, y, name);
+        super(x, y, 26, 32, name, screen);
         this.screen = screen;
         this.index = index;
-        this.width = 28;
-        this.height = 32;
         this.icon = icon;
         this.itemRenderer = MinecraftClient.getInstance().getItemRenderer();
         this.textRenderer = MinecraftClient.getInstance().textRenderer;
     }
 
     @Override
-    public void drawButton(int mouseX, int mouseY, float ticks) {
+    public void renderButton(int mouseX, int mouseY, float ticks) {
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.drawBackground(MinecraftClient.getInstance(), mouseX, mouseY);
+        this.renderBg(MinecraftClient.getInstance(), mouseX, mouseY);
         GuiLighting.enableForItems();
         this.drawIcon(MinecraftClient.getInstance(), mouseX, mouseY);
         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -46,7 +43,7 @@ public class TabWidget extends ButtonWidget {
     }
 
     @Override
-    protected void drawBackground(MinecraftClient mc, int mouseX, int mouseY) {
+    protected void renderBg(MinecraftClient mc, int mouseX, int mouseY) {
         mc.getTextureManager().bindTexture(TABS);
         int texX = this.index > 0 ? 28 : 0;
         int texY = this.isSelected() ? 32 : 0;
@@ -65,23 +62,6 @@ public class TabWidget extends ButtonWidget {
         GlStateManager.disableLighting();
         this.itemRenderer.zOffset = 0.0F;
         this.zOffset = 0.0F;
-    }
-
-    @Override
-    public void onPressed(double double_1, double double_2) {
-        super.onPressed(double_1, double_2);
-        if (!this.isSelected())
-            this.onSelected();
-    }
-
-    @Override
-    public void onReleased(double double_1, double double_2) {
-        super.onReleased(double_1, double_2);
-    }
-
-    private void onSelected() {
-       // this.playPressedSound(MinecraftClient.getInstance().getSoundLoader());
-        this.screen.onSelectedChange(this.index);
     }
 
     private boolean isSelected() {
